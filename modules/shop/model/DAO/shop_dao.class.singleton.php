@@ -13,10 +13,10 @@
         }
 
         public function select_filters($db) {
-            $array_filters = array('talla' , 'color', 'categoria');
+            $array_filters = array('brand' , 'type', 'category');
             $array_return = array();
             foreach ($array_filters as $row) {
-                $sql = 'SELECT DISTINCT ' . $row . ' FROM producto';
+                $sql = 'SELECT DISTINCT ' . $row . ' FROM carsv3';
                 $stmt = $db->ejecutar($sql);
                 if (mysqli_num_rows($stmt) > 0) {
                     while ($row_inner[] = mysqli_fetch_assoc($stmt)) {
@@ -28,56 +28,59 @@
             return $array_return;
         }
 
-        public function sql_query($filters){
-            $continue = "";
-            $count = 0;
-            $count1 = 0;
-            $count3 = 0;
-            $where = ' WHERE ';
-            foreach ($filters as $key => $row) {
-                foreach ( $row as $key => $row_inner) {
-                    if ($count == 0) {
-                            foreach ( $row_inner as $value) {
-                                if ($count1 == 0) {
-                                    $continue = $key . ' IN ("'. $value . '"';
-                                }else {
-                                    $continue = $continue  . ', "' . $value . '"';
-                                }
-                                $count1++;
-                            }
-                            $continue = $continue . ')';
-                    }else {
-                            foreach ($row_inner as $value)  {
-                                if ($count2 == 0) {
-                                    $continue = ' AND ' . $key . ' IN ("' . $value . '"';
-                                }else {
-                                    $continue = $continue . ', "' . $value . '"';
-                                }
-                                $count2++;
-                            }
-                            $continue = $continue . ')';
+        // public function sql_query($filters){
+        //     $continue = "";
+        //     $count = 0;
+        //     $count1 = 0;
+        //     $count3 = 0;
+        //     $where = ' WHERE ';
+        //     foreach ($filters as $key => $row) {
+        //         foreach ( $row as $key => $row_inner) {
+        //             if ($count == 0) {
+        //                     foreach ( $row_inner as $value) {
+        //                         if ($count1 == 0) {
+        //                             $continue = $key . ' IN ("'. $value . '"';
+        //                         }else {
+        //                             $continue = $continue  . ', "' . $value . '"';
+        //                         }
+        //                         $count1++;
+        //                     }
+        //                     $continue = $continue . ')';
+        //             }else {
+        //                     foreach ($row_inner as $value)  {
+        //                         if ($count2 == 0) {
+        //                             $continue = ' AND ' . $key . ' IN ("' . $value . '"';
+        //                         }else {
+        //                             $continue = $continue . ', "' . $value . '"';
+        //                         }
+        //                         $count2++;
+        //                     }
+        //                     $continue = $continue . ')';
                         
-                    }
-                }
-                $count++;
-                $count2 = 0;
-                $where = $where . $continue;
-            }
-            return $where;
-        }
+        //             }
+        //         }
+        //         $count++;
+        //         $count2 = 0;
+        //         $where = $where . $continue;
+        //     }
+        //     return $where;
+        // }
 
-        public function select_list_products($db, $items_page, $total_prod) {
-            $sql = "SELECT codigo_producto, nombre, precio, images FROM producto ORDER BY likes DESC LIMIT $total_prod, $items_page ";
+        public function select_list_products($db, $items_page) {
+            // $total_prod = $items_page[0];
+            
+            // $sql = "SELECT codigo_producto, nombre, precio, images FROM producto ORDER BY likes DESC LIMIT $total_prod, $items_page ";
+            $sql = "SELECT * FROM carsv3 ORDER BY visits DESC LIMIT 0, 3";
             $stmt = $db->ejecutar($sql);
             return $db->listar($stmt);
         }
 
-        public function select_list_filters_products($db, $items_page, $total_prod, $query) {
-            $filters = self::sql_query($query);
-            $sql = "SELECT codigo_producto, nombre, precio, images FROM producto $filters ORDER BY likes DESC LIMIT $total_prod, $items_page ";
-            $stmt = $db->ejecutar($sql);
-            return $db->listar($stmt);
-        }
+        // public function select_list_filters_products($db, $items_page, $total_prod, $query) {
+        //     $filters = self::sql_query($query);
+        //     $sql = "SELECT codigo_producto, nombre, precio, images FROM producto $filters ORDER BY likes DESC LIMIT $total_prod, $items_page ";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
 
         public function select_pagination($db){
             $sql = "SELECT COUNT(*) AS n_prod FROM producto";
@@ -85,12 +88,12 @@
             return $db->listar($stmt);
         }
 
-        public function select_pagination_filters($db, $query){
-            $filters = self::sql_query($query);
-            $sql = "SELECT COUNT(*) AS n_prod FROM producto $filters";
-            $stmt = $db->ejecutar($sql);
-            return $db->listar($stmt);
-        }
+        // public function select_pagination_filters($db, $query){
+        //     $filters = self::sql_query($query);
+        //     $sql = "SELECT COUNT(*) AS n_prod FROM producto $filters";
+        //     $stmt = $db->ejecutar($sql);
+        //     return $db->listar($stmt);
+        // }
 
         public function select_filters_pagination($db, $filters){
             $sql = "SELECT COUNT(*) AS n_prod FROM producto $filters";

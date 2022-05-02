@@ -1,16 +1,18 @@
 <?php
+    require_once("modules\shop\model\model\shop_model.class.singleton.php");
+
     class controller_shop {
 
         function view() {
             common::load_view('top_page_shop.php', VIEW_PATH_SHOP . 'shop.html');
         }
 
-        function filters() {
+        function FiltersContent() {
             echo json_encode(common::load_model('shop_model', 'get_filters'));
         }
 
-        function list_products() {
-            echo json_encode(common::load_model('shop_model', 'get_list_products', [$_POST['items_page'], $_POST['total_prod']]));
+        function AllCars() {
+            echo json_encode(common::load_model('shop_model', 'get_list_products', [$_POST]));
         }
 
         function list_filters_products() {
@@ -45,4 +47,3 @@
             echo json_encode(common::load_model('shop_model', 'get_insert_cart', [$_POST['user'], $_POST['id']]));
         }
     }
-?>

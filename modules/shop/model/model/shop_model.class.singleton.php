@@ -1,4 +1,6 @@
 <?php
+    require_once("modules\shop\model\BLL\shop_bll.class.singleton.php");
+
     class shop_model {
         private $bll;
         static $_instance;
@@ -22,17 +24,17 @@
             return $this -> bll -> get_list_products_BLL($args);
         }
 
-        public function get_list_filters_products($args) {
-            return $this -> bll -> get_list_filters_products_BLL($args);
-        }
+        // public function get_list_filters_products($args) {
+        //     return $this -> bll -> get_list_filters_products_BLL($args);
+        // }
 
         public function get_pagination() {
             return $this -> bll -> get_pagination_BLL();
         }
 
-        public function get_pagination_filters($args) {
-            return $this -> bll -> get_pagination_filters_BLL($args);
-        }
+        // public function get_pagination_filters($args) {
+        //     return $this -> bll -> get_pagination_filters_BLL($args);
+        // }
 
         public function get_details($args) {
             return $this -> bll -> get_details_BLL($args);

@@ -1,4 +1,6 @@
 <?php
+    require_once("modules\shop\model\DAO\shop_dao.class.singleton.php");
+
 	class shop_bll {
 		private $dao;
 		private $db;
@@ -21,20 +23,20 @@
 		}
 
 		public function get_list_products_BLL($args) {
-			return $this -> dao -> select_list_products($this->db, $args[0], $args[1]);
+			return $this -> dao -> select_list_products($this->db, $args);
 		}
 
-		public function get_list_filters_products_BLL($args) {
-			return $this -> dao -> select_list_filters_products($this->db, $args[0], $args[1], json_decode($args[2]));
-		}
+		// public function get_list_filters_products_BLL($args) {
+		// 	return $this -> dao -> select_list_filters_products($this->db, $args[0], $args[1], json_decode($args[2]));
+		// }
 		
 		public function get_pagination_BLL() {
 			return $this -> dao -> select_pagination($this->db);
 		}
 
-		public function get_pagination_filters_BLL($args) {
-			return $this -> dao -> select_pagination_filters($this->db, json_decode($args));
-		}
+		// public function get_pagination_filters_BLL($args) {
+		// 	return $this -> dao -> select_pagination_filters($this->db, json_decode($args));
+		// }
 
 		public function get_details_BLL($args) {
 			return $this -> dao -> select_details($this->db, $args);

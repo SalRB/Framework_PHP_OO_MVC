@@ -5,39 +5,43 @@
         <uri>view</uri>
     </function>
     <function>
-        <name>filters</name>
-        <uri>filters</uri>
+        <name>FiltersContent</name>
+        <uri>FiltersContent</uri>
     </function>
     <function>
-        <name>list_products</name>
-        <uri>list_products</uri>
+        <name>CountAll</name>
+        <uri>CountAll</uri>
     </function>
     <function>
-        <name>list_filters_products</name>
-        <uri>list_filters_products</uri>
+        <name>AllCars</name>
+        <uri>AllCars</uri>
     </function>
     <function>
-        <name>pagination</name>
-        <uri>pagination</uri>
+        <name>CountVisits</name>
+        <uri>CountVisits</uri>
     </function>
         <function>
-        <name>pagination_filters</name>
-        <uri>pagination_filters</uri>
+        <name>ShopDetails</name>
+        <uri>ShopDetails</uri>
     </function>
     <function>
-        <name>details</name>
-        <uri>details</uri>
+        <name>LoadRelated</name>
+        <uri>LoadRelated</uri>
     </function>
     <function>
-        <name>most_visit</name>
-        <uri>most_visit</uri>
+        <name>load_likes</name>
+        <uri>load_likes</uri>
     </function>
     <function>
-        <name>load_like</name>
-        <uri>load_like</uri>
+        <name>Filters</name>
+        <uri>Filters</uri>
     </function>
     <function>
-        <name>click_like</name>
-        <uri>click_like</uri>
+        <name>CountWithFilters</name>
+        <uri>CountWithFilters</uri>
+    </function>
+    <function>
+        <name>control_likes</name>
+        <uri>control_likes</uri>
     </function>
 </functions>
