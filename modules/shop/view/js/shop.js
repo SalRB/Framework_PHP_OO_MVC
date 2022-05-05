@@ -39,11 +39,14 @@ function loadDetails(id) {
 
     $("#shopPage").empty();
 
-    ajaxPromise('modules/shop/controller/controller_shop.php?op=ShopDetails&id=' + id,
-        'GET', 'JSON')
+    ajaxPromise(friendlyURL("?module=shop&op=ShopDetails"),
+        'POST', 'JSON', { id })
+        // ajaxPromise('modules/shop/controller/controller_shop.php?op=ShopDetails&id=' + id,
+        // 'GET', 'JSON')
 
         .then(function (data) {
-
+            // console.log(data[0].ID);
+            // console.log(data);
             ///////////////////////////////////////////
             //                SLIDER
             ///////////////////////////////////////////
@@ -56,15 +59,15 @@ function loadDetails(id) {
             $('<div></div>').attr({ 'id': "div2", 'class': "carousel-inner" }).appendTo('#div1');
 
 
-            for (row in data[1][0]) {
+            for (row in data[1]) {
                 if (row == 0) {
                     $('<li></li>').attr({ 'id': "AAA", 'class': "active", 'data-target': "#main-slider", 'data-slide-to': row }).appendTo('#ol');
 
-                    $('<div></div>').attr({ 'id': "AAA", 'class': "item active", "style": "background-image: url(http://localhost/Framework_PHP_OO_MVC/views/images/cars/" + data[1][0][row].images + "); border-radius: 25px; max-height: 500px;" }).appendTo('#div2');
+                    $('<div></div>').attr({ 'id': "AAA", 'class': "item active", "style": "background-image: url(http://localhost/Framework_PHP_OO_MVC/views/images/cars/" + data[1][row].images + "); border-radius: 25px; max-height: 500px;" }).appendTo('#div2');
                 } else {
                     $('<li></li>').attr({ 'id': "AAA", 'data-target': "#main-slider", 'data-slide-to': row }).appendTo('#ol');
 
-                    $('<div></div>').attr({ 'id': "AAA", 'class': "item", "style": "background-image: url(http://localhost/Framework_PHP_OO_MVC/views/images/cars/" + data[1][0][row].images + "); max-height: 500px; border-radius: 25px;" }).appendTo('#div2');
+                    $('<div></div>').attr({ 'id': "AAA", 'class': "item", "style": "background-image: url(http://localhost/Framework_PHP_OO_MVC/views/images/cars/" + data[1][row].images + "); max-height: 500px; border-radius: 25px;" }).appendTo('#div2');
                 }
             }
 
@@ -79,11 +82,11 @@ function loadDetails(id) {
 
             $('<div></div>').attr({ 'id': "AAA", 'style': "position: absolute; top: 20%; left: 60%; display: contents;" }).appendTo('#shopPage').html(
                 '<div style="position: absolute; top: 20%; left: 60%;">' +
-                '<h1 style="font-size: 48px;">' + data[0].brand + ' ' + data[0].model + '</h1>' +
-                '<h1 style="font-size: 24; color: rgb(177, 41, 0);">' + data[0].price + '€</h1>' +
-                '<h1 style="font-size: 24;"><img src="http://localhost/Framework_PHP_OO_MVC/views/images/icons/car-door.png" style="max-height: 45px;"> ' + data[0].type + ' |<img src="http://localhost/Framework_PHP_OO_MVC/views/images/icons/seat.png" style="max-height: 45px;">' + data[0].capacity + '</h1>' +
-                '<h1 style="font-size: 24;"><img src="http://localhost/Framework_PHP_OO_MVC/views/images/icons/fuel.png" style="max-height: 45px;"> ' + data[0].type + '</h1>' +
-                '<h1 style="font-size: 24;">Estado: ' + data[0].category + '</h1>' +
+                '<h1 style="font-size: 48px;">' + data[0][0].brand + ' ' + data[0][0].model + '</h1>' +
+                '<h1 style="font-size: 24; color: rgb(177, 41, 0);">' + data[0][0].price + '€</h1>' +
+                '<h1 style="font-size: 24;"><img src="http://localhost/Framework_PHP_OO_MVC/views/images/icons/car-door.png" style="max-height: 45px;"> ' + data[0][0].type + ' |<img src="http://localhost/Framework_PHP_OO_MVC/views/images/icons/seat.png" style="max-height: 45px;">' + data[0][0].capacity + '</h1>' +
+                '<h1 style="font-size: 24;"><img src="http://localhost/Framework_PHP_OO_MVC/views/images/icons/fuel.png" style="max-height: 45px;"> ' + data[0][0].type + '</h1>' +
+                '<h1 style="font-size: 24;">Estado: ' + data[0][0].category + '</h1>' +
                 '</div>'
 
             );
@@ -102,19 +105,21 @@ function loadDetails(id) {
 
             LoadRelated(id);
 
-        }).catch(function () {
+        }).catch(function (e) {
+            console.log(e);
             // window.location.href = "index.php?module=exceptions&op=503&message=Error_loadDetails_js";
         });
 }
 
 function ajaxForSearch(durl, method = 'GET', params) {
+    // console.log(params);
     var url = durl;
-    console.log('afax for busqueda');
+    // console.log('afax for busqueda');
     ajaxPromise(url,
         method, 'JSON', { params })
 
         .then(function (data) {
-            console.log(data);
+            // console.log(data);
             $("#divCars").empty();
 
             $('<div></div>').attr({ 'id': "divCars", 'class': "divCars" }).appendTo('#shopPage');
@@ -168,9 +173,9 @@ function countCars(durl, method = 'GET', params) {
         method, 'JSON', { params })
 
         .then(function (data) {
-
+            // console.log(data[0].counted);
             var total_pages = 0;
-            var total_prod = data['counted'];
+            var total_prod = data[0].counted;
             // console.log('Productos totales ' + total_prod);
             if (total_prod >= 3) {
                 total_pages = total_prod / 3;
@@ -179,7 +184,7 @@ function countCars(durl, method = 'GET', params) {
             } else {
                 total_pages = 1;
             }
-
+            // console.log(total_pages, total_prod, total_pages);
             $('#divPagination').bootpag({
                 total: total_pages,
                 page: 1,
@@ -201,8 +206,9 @@ function countCars(durl, method = 'GET', params) {
                 }
             });
 
-        }).catch(function () {
+        }).catch(function (e) {
             console.log('error pagination');
+            console.log(e);
         });
 }
 
@@ -435,23 +441,39 @@ function CreateMap() {
     });
 }
 
-function AddMarker(data, row = '0') {
+function AddMarker(data, row = '-1') {
 
-    const popup = new mapboxgl.Popup({ offset: 25 }).setHTML('<div class=' + data[row].ID + '" id="divpopup"><img src="http://localhost/Framework_PHP_OO_MVC/views/images/cars/' + data[row].image + '">' +
-        '<h4>' + data[row].brand + ' ' + data[row].model + '</h4>' +
-        '<h4 style="color: rgb(177, 41, 0);">' + data[row].price + ' €</h4></div>');
+    if (row != -1) {
+        const popup = new mapboxgl.Popup({ offset: 25 }).setHTML('<div class=' + data[row].ID + '" id="divpopup"><img src="http://localhost/Framework_PHP_OO_MVC/views/images/cars/' + data[row].image + '">' +
+            '<h4>' + data[row].brand + ' ' + data[row].model + '</h4>' +
+            '<h4 style="color: rgb(177, 41, 0);">' + data[row].price + ' €</h4></div>');
 
-    const marker1 = new mapboxgl.Marker()
-        .setLngLat([data[row].lon, data[row].lat])
-        .setPopup(popup) // sets a popup on this markers
-        .addTo(map);
+        const marker1 = new mapboxgl.Marker()
+            .setLngLat([data[row].lon, data[row].lat])
+            .setPopup(popup) // sets a popup on this markers
+            .addTo(map);
+
+    } else {
+        // console.log(data);
+        const popup = new mapboxgl.Popup({ offset: 25 }).setHTML('<div class=' + data[0][0].ID + '" id="divpopup"><img src="http://localhost/Framework_PHP_OO_MVC/views/images/cars/' + data[0][0].image + '">' +
+            '<h4>' + data[0][0].brand + ' ' + data[0][0].model + '</h4>' +
+            '<h4 style="color: rgb(177, 41, 0);">' + data[0][0].price + ' €</h4></div>');
+
+        const marker1 = new mapboxgl.Marker()
+            .setLngLat([data[0][0].lon, data[0][0].lat])
+            .setPopup(popup) // sets a popup on this markers
+            .addTo(map);
+
+
+    }
+
 
 }
 
 function CountVisits(id) {
 
-    ajaxPromise('modules/shop/controller/controller_shop.php?op=CountVisits&id=' + id,
-        'GET', 'JSON')
+    ajaxPromise(friendlyURL("?module=shop&op=CountVisits"),
+        'POST', 'JSON', { id })
 
 }
 
@@ -466,8 +488,8 @@ function LoadRelated(id) {
     // console.log(related);
 
     localStorage.setItem('related', JSON.stringify(related));
-
-    ajaxPromise('modules/shop/controller/controller_shop.php?op=LoadRelated',
+    // console.log(related);
+    ajaxPromise(friendlyURL("?module=shop&op=LoadRelated"),
         'POST', 'JSON', { related })
         .then(function (data) {
             // console.log(data);

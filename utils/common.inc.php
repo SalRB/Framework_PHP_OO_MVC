@@ -40,6 +40,8 @@ class common
             if (method_exists($model, $function)) {
                 $obj = $model::getInstance();
                 if ($args != null) {
+                    // return $args;
+                    // exit;
                     return call_user_func(array($obj, $function), $args);
                 }
                 return call_user_func(array($obj, $function));

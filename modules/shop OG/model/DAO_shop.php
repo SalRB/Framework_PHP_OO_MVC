@@ -34,7 +34,7 @@ class DAOshop
     function selectCar($ID)
     {
 
-        $sql = "SELECT * FROM carsv3 WHERE ID = '$ID'";
+        $sql = "SELECT * FROM carsv3 WHERE ID = 6";
 
         $conexion = connect::con();
         $res = mysqli_query($conexion, $sql)->fetch_object();

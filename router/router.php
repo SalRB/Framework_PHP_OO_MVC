@@ -56,10 +56,7 @@ class router
                 if (in_array($this->uriModule, (array) $row->uri)) {
                     // $path = MODULES_PATH . $row -> name . '/controller/controller_' . (String) $row -> name . '.class.php';
                     $path = 'modules/' . $row->name . '/controller/controller_' . (string) $row->name . '.class.php';
-                    // echo $path;
-                    // exit;
-// echo $path;
-// exit;
+
                     if (file_exists($path)) {
                         require_once($path);
                         $controllerName = 'controller_' . (string) $row->name;
