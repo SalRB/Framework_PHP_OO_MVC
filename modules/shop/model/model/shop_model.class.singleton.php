@@ -24,8 +24,16 @@
             return $this -> bll -> get_list_products_BLL($args);
         }
 
+        public function get_list_products_with_filters($args) {
+            return $this -> bll -> get_list_products_with_filters_BLL($args);
+        }
+
         public function get_list_count_all() {
             return $this -> bll -> get_list_count_all_BLL();
+        }
+
+        public function get_list_count_with_filters($args) {
+            return $this -> bll -> get_list_count_with_filters_BLL($args);
         }
 
         public function get_car_datails($args) {
@@ -40,32 +48,4 @@
             return $this -> bll -> get_load_related_BLL($args);
         }
 
-        // public function get_list_filters_products($args) {
-        //     return $this -> bll -> get_list_filters_products_BLL($args);
-        // }
-
-        public function get_pagination() {
-            return $this -> bll -> get_pagination_BLL();
-        }
-
-        // public function get_pagination_filters($args) {
-        //     return $this -> bll -> get_pagination_filters_BLL($args);
-        // }
-
-        public function get_details($args) {
-            return $this -> bll -> get_details_BLL($args);
-        }
-
-        public function get_most_visit($args) {
-            return $this -> bll -> get_most_visit_BLL($args);
-        }
-
-        public function get_load_like($args) {
-            return $this -> bll -> get_load_like_BLL($args);
-        }
-
-        public function get_click_like($args) {
-            return $this -> bll -> get_click_like_BLL($args);
-        }
     }
-?>

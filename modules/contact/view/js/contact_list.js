@@ -50,11 +50,12 @@ function send_email(content_email) {
 	ajaxPromise(friendlyURL("?controller=contact&op=send_contact_us"), 'POST', 'JSON', content_email)
 		.then(function (data) {
 			console.log(data);
-			toastr.success('Email sended');
+			toastr.error('Something happend when trying to send.', 'Error');
+
 		})
 		.catch(function (error, data) {
 			console.log(error);
-			toastr.error('Something happend when trying to send.', 'Error');
+			toastr.success('Email sended');
 		});
 }
 

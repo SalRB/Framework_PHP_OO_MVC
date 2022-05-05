@@ -21,9 +21,21 @@ class controller_shop
         echo json_encode(common::load_model('shop_model', 'get_list_products', [$_POST]));
     }
 
+    function Filters()
+    {
+        echo json_encode(common::load_model('shop_model', 'get_list_products_with_filters', $_POST));
+    }
+
     function CountAll()
     {
         echo json_encode(common::load_model('shop_model', 'get_list_count_all'));
+    }
+
+    function CountWithFilters()
+    {
+        // echo json_encode($_POST['params']);
+        // exit;
+        echo json_encode(common::load_model('shop_model', 'get_list_count_with_filters', $_POST));
     }
 
     function ShopDetails()
@@ -39,45 +51,5 @@ class controller_shop
     function LoadRelated()
     {
         echo json_encode(common::load_model('shop_model', 'get_load_related', $_POST['related']));
-    }
-
-    function list_filters_products()
-    {
-        echo json_encode(common::load_model('shop_model', 'get_list_filters_products', [$_POST['items_page'], $_POST['total_prod'], $_POST['filters']]));
-    }
-
-    function pagination()
-    {
-        echo json_encode(common::load_model('shop_model', 'get_pagination'));
-    }
-
-    function pagination_filters()
-    {
-        echo json_encode(common::load_model('shop_model', 'get_pagination_filters', $_POST['filters']));
-    }
-
-    function details()
-    {
-        echo json_encode(common::load_model('shop_model', 'get_details', $_GET['id']));
-    }
-
-    function most_visit()
-    {
-        echo json_encode(common::load_model('shop_model', 'get_most_visit', $_POST['id']));
-    }
-
-    function load_like()
-    {
-        echo json_encode(common::load_model('shop_model', 'get_load_like', $_GET['user']));
-    }
-
-    function click_like()
-    {
-        echo json_encode(common::load_model('shop_model', 'get_click_like', [$_GET['id'], $_GET['user']]));
-    }
-
-    function insert_cart()
-    {
-        echo json_encode(common::load_model('shop_model', 'get_insert_cart', [$_POST['user'], $_POST['id']]));
     }
 }

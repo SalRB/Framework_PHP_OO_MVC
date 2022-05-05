@@ -119,7 +119,9 @@ function ajaxForSearch(durl, method = 'GET', params) {
         method, 'JSON', { params })
 
         .then(function (data) {
+
             // console.log(data);
+            
             $("#divCars").empty();
 
             $('<div></div>').attr({ 'id': "divCars", 'class': "divCars" }).appendTo('#shopPage');
@@ -173,14 +175,12 @@ function countCars(durl, method = 'GET', params) {
         method, 'JSON', { params })
 
         .then(function (data) {
-            // console.log(data[0].counted);
+            // console.log(data);
             var total_pages = 0;
             var total_prod = data[0].counted;
-            // console.log('Productos totales ' + total_prod);
             if (total_prod >= 3) {
                 total_pages = total_prod / 3;
                 total_pages = Math.ceil(total_pages);
-                // console.log(total_pages);
             } else {
                 total_pages = 1;
             }
@@ -202,6 +202,7 @@ function countCars(durl, method = 'GET', params) {
                     params.push({ "limit": 3 });
                     params.push({ "offset": total_prod });
                     // console.log(params);
+                    
                     ajaxForSearch(friendlyURL("?module=shop&op=Filters"), 'POST', params);
                 }
             });
@@ -217,15 +218,10 @@ function loadListCars() {
     var filters = localStorage.getItem('filters') || false;
 
     if (filters != false) {
-        // console.log('cargar con filtros');
-
         all_lists_products();
     } else {
-        // console.log('cargar');
         countCars(friendlyURL("?module=shop&op=CountAll"));
-        // countCars('modules/shop/controller/controller_shop.php?op=CountAll');
         ajaxForSearch(friendlyURL("?module=shop&op=AllCars"));
-        // ajaxForSearch('modules/shop/controller/controller_shop.php?op=AllCars');
     }
 
 }
@@ -236,9 +232,7 @@ function all_lists_products() {
     // console.log(all_filters);
 
     countCars(friendlyURL("?module=shop&op=CountWithFilters"), 'POST', all_filters);
-    ajaxForSearch(friendlyURL("?module=shop&op=Filters"), 'POST', all_filters);
-    // countCars('modules/shop/controller/controller_shop.php?op=CountWithFilters', 'POST', all_filters);
-    // ajaxForSearch('modules/shop/controller/controller_shop.php?op=Filters', 'POST', all_filters);
+    ajaxForSearch(friendlyURL("?module=shop&op=Filters"), 'POST', all_filters); // Es probable que esto sobre y por eso se duplican cosas
 
 }
 

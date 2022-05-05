@@ -32,53 +32,8 @@ class shop_dao
         return $array_return;
     }
 
-    // public function sql_query($filters){
-    //     $continue = "";
-    //     $count = 0;
-    //     $count1 = 0;
-    //     $count3 = 0;
-    //     $where = ' WHERE ';
-    //     foreach ($filters as $key => $row) {
-    //         foreach ( $row as $key => $row_inner) {
-    //             if ($count == 0) {
-    //                     foreach ( $row_inner as $value) {
-    //                         if ($count1 == 0) {
-    //                             $continue = $key . ' IN ("'. $value . '"';
-    //                         }else {
-    //                             $continue = $continue  . ', "' . $value . '"';
-    //                         }
-    //                         $count1++;
-    //                     }
-    //                     $continue = $continue . ')';
-    //             }else {
-    //                     foreach ($row_inner as $value)  {
-    //                         if ($count2 == 0) {
-    //                             $continue = ' AND ' . $key . ' IN ("' . $value . '"';
-    //                         }else {
-    //                             $continue = $continue . ', "' . $value . '"';
-    //                         }
-    //                         $count2++;
-    //                     }
-    //                     $continue = $continue . ')';
-
-    //             }
-    //         }
-    //         $count++;
-    //         $count2 = 0;
-    //         $where = $where . $continue;
-    //     }
-    //     return $where;
-    // }
-
     public function select_list_products($db, $items_page)
     {
-
-
-        // if (!empty($limitData['params'][0]['limit'])) {
-        //     $limit = $limitData['params'][0]['limit'];
-        //     $offset = $limitData['params'][1]['offset'];
-
-
         if (!empty($items_page[0]['params'][0]['limit'])) {
             $offset = $items_page[0]['params'][0]['limit'];
             $limit = $items_page[0]['params'][1]['offset'];
@@ -88,17 +43,195 @@ class shop_dao
             $sql = "SELECT * FROM carsv3 ORDER BY visits DESC LIMIT 0, 3";
         }
 
-
-
-        // $sql = "SELECT codigo_producto, nombre, precio, images FROM producto ORDER BY likes DESC LIMIT $total_prod, $items_page ";
-        // $sql = "SELECT * FROM carsv3 ORDER BY visits DESC LIMIT 0, 3";
         $stmt = $db->ejecutar($sql);
         return $db->listar($stmt);
     }
 
+    public function select_list_products_with_filters($db, $filters)
+    {
+        $count = 0;
+        $count2 = 0;
+        $count3 = 0;
+
+        $sql = "SELECT * FROM carsv3 WHERE ";
+
+        if (!empty($filters['params'][$count]['brand'])) {
+            foreach ($filters['params'][$count]['brand'] as $key1) {
+                $brand = $filters['params'][$count]['brand'][$count2];
+                if ($count3 == 0) {
+                    $sql .= "brand = '$brand'";
+                    $count2++;
+                    $count3++;
+                } else {
+                    if ($count2 == 0) {
+                        $sql .= " AND brand = '$brand'";
+                    } else {
+                        $sql .= " OR brand = '$brand'";
+                    }
+                    $count2++;
+                }
+            }
+            $count++;
+        }
+        $count2 = 0;
+
+        if (!empty($filters['params'][$count]['type'])) {
+            foreach ($filters['params'][$count]['type'] as $key2) {
+                $type = $filters['params'][$count]['type'][$count2];
+                if ($count3 == 0) {
+                    $sql .= "type = '$type'";
+                    $count2++;
+                    $count3++;
+                } else {
+                    if ($count2 == 0) {
+                        $sql .= " AND type = '$type'";
+                    } else {
+                        $sql .= " OR type = '$type'";
+                    }
+                    $count2++;
+                }
+            }
+            $count++;
+        }
+
+        $count2 = 0;
+
+        if (!empty($filters['params'][$count]['category'])) {
+            foreach ($filters['params'][$count]['category'] as $key3) {
+                $category = $filters['params'][$count]['category'][$count2];
+                if ($count3 == 0) {
+                    $sql .= "category = '$category'";
+                    $count2++;
+                    $count3++;
+                } else {
+                    if ($count2 == 0) {
+                        $sql .= " AND category = '$category'";
+                    } else {
+                        $sql .= " OR category = '$category'";
+                    }
+                    $count2++;
+                }
+            }
+            $count++;
+        }
+
+        if (!empty($filters['params'][$count]['city'])) {
+            $city = $filters['params'][$count]['city'][0];
+            if ($count3 == 0) {
+                $sql .= "city LIKE '%$city%'";
+                $count3++;
+            } else {
+                $sql .= " AND city LIKE '%$city%'";
+            }
+        }
+
+        if (!empty($filters['params'][$count]['orderby'])) {
+            $orderby = $filters['params'][$count]['orderby'];
+            $sql .= " ORDER BY $orderby, visits DESC";
+        } else {
+            $sql .= " ORDER BY visits DESC";
+        }
+
+        if (!empty($filters['params'][$count]['limit'])) {
+            $limit = $filters['params'][$count]['limit'];
+            $count++;
+            $offset = $filters['params'][$count]['offset'];
+            $sql .= " LIMIT $offset, $limit";
+        } else {
+            $sql .= " LIMIT 0, 3";
+        }
+
+
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
+
+
     public function select_count_all_cars($db)
     {
         $sql = "SELECT COUNT(*) AS counted FROM carsv3";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
+
+    public function select_count_with_filters($db, $filters)
+    {
+        $count = 0;
+        $count2 = 0;
+        $count3 = 0;
+
+        $sql = "SELECT COUNT(*) AS counted FROM carsv3 WHERE ";
+
+        if (!empty($filters['params'][$count]['brand'])) {
+            foreach ($filters['params'][$count]['brand'] as $key1) {
+                $brand = $filters['params'][$count]['brand'][$count2];
+                if ($count3 == 0) {
+                    $sql .= "brand = '$brand'";
+                    $count2++;
+                    $count3++;
+                } else {
+                    if ($count2 == 0) {
+                        $sql .= " AND brand = '$brand'";
+                    } else {
+                        $sql .= " OR brand = '$brand'";
+                    }
+                    $count2++;
+                }
+            }
+            $count++;
+        }
+        $count2 = 0;
+
+        if (!empty($filters['params'][$count]['type'])) {
+            foreach ($filters['params'][$count]['type'] as $key2) {
+                $type = $filters['params'][$count]['type'][$count2];
+                if ($count3 == 0) {
+                    $sql .= "type = '$type'";
+                    $count2++;
+                    $count3++;
+                } else {
+                    if ($count2 == 0) {
+                        $sql .= " AND type = '$type'";
+                    } else {
+                        $sql .= " OR type = '$type'";
+                    }
+                    $count2++;
+                }
+            }
+            $count++;
+        }
+
+        $count2 = 0;
+
+        if (!empty($filters['params'][$count]['category'])) {
+            foreach ($filters['params'][$count]['category'] as $key3) {
+                $category = $filters['params'][$count]['category'][$count2];
+                if ($count3 == 0) {
+                    $sql .= "category = '$category'";
+                    $count2++;
+                    $count3++;
+                } else {
+                    if ($count2 == 0) {
+                        $sql .= " AND category = '$category'";
+                    } else {
+                        $sql .= " OR category = '$category'";
+                    }
+                    $count2++;
+                }
+            }
+            $count++;
+        }
+
+        if (!empty($filters['params'][$count]['city'])) {
+            $city = $filters['params'][$count]['city'][0];
+            if ($count3 == 0) {
+                $sql .= "city LIKE '%$city%'";
+                $count3++;
+            } else {
+                $sql .= " AND city LIKE '%$city%'";
+            }
+        }
+
         $stmt = $db->ejecutar($sql);
         return $db->listar($stmt);
     }
@@ -133,75 +266,5 @@ class shop_dao
         $sql = "SELECT * FROM carsv3 WHERE id <> '$id' AND brand = (SELECT brand FROM carsv3 WHERE id = '$id') OR type = (SELECT type FROM carsv3 WHERE id = '$id') LIMIT $offset, $limit";
         $stmt = $db->ejecutar($sql);
         return $db->listar($stmt);
-    }
-
-    // public function select_list_filters_products($db, $items_page, $total_prod, $query) {
-    //     $filters = self::sql_query($query);
-    //     $sql = "SELECT codigo_producto, nombre, precio, images FROM producto $filters ORDER BY likes DESC LIMIT $total_prod, $items_page ";
-    //     $stmt = $db->ejecutar($sql);
-    //     return $db->listar($stmt);
-    // }
-
-    public function select_pagination($db)
-    {
-        $sql = "SELECT COUNT(*) AS n_prod FROM producto";
-        $stmt = $db->ejecutar($sql);
-        return $db->listar($stmt);
-    }
-
-    // public function select_pagination_filters($db, $query){
-    //     $filters = self::sql_query($query);
-    //     $sql = "SELECT COUNT(*) AS n_prod FROM producto $filters";
-    //     $stmt = $db->ejecutar($sql);
-    //     return $db->listar($stmt);
-    // }
-
-    public function select_filters_pagination($db, $filters)
-    {
-        $sql = "SELECT COUNT(*) AS n_prod FROM producto $filters";
-        $stmt = $db->ejecutar($sql);
-        return $db->listar($stmt);
-    }
-
-    public function select_details($db, $id)
-    {
-        $sql = "SELECT codigo_producto, nombre, precio, talla, color, descripcion, images FROM `producto` WHERE codigo_producto = '$id'";
-        $stmt = $db->ejecutar($sql);
-        return $db->listar($stmt);
-    }
-
-    public function update_most_visit($db, $id)
-    {
-        $sql = "UPDATE producto SET likes = likes + 1 WHERE codigo_producto = '$id'";
-        $stmt = $db->ejecutar($sql);
-        return $db->listar($stmt);
-    }
-
-    public function select_load_likes($db, $user)
-    {
-        $sql = "SELECT codigo_producto FROM `likes` WHERE user='$user'";
-        $stmt = $db->ejecutar($sql);
-        return $db->listar($stmt);
-    }
-
-    public function select_likes($db, $id, $user)
-    {
-        $sql = "SELECT user, codigo_producto FROM `likes` WHERE user='$user' AND codigo_producto='$id'";
-        $stmt = $db->ejecutar($sql);
-        return $db->listar($stmt);
-    }
-
-    public function insert_likes($db, $id, $user)
-    {
-        $sql = "INSERT INTO likes (user, codigo_producto) VALUES ('$user','$id')";
-        $stmt = $db->ejecutar($sql);
-        return "like";
-    }
-
-    function delete_likes($db, $id, $user)
-    {
-        $sql = "DELETE FROM `likes` WHERE user='$user' AND codigo_producto='$id'";
-        $stmt = $db->ejecutar($sql);
-        return "unlike";
     }
 }

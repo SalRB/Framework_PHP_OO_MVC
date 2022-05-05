@@ -8,7 +8,7 @@ class controller_contact
 
 	function send_contact_us()
 	{
-		// echo json_encode('qwe');
+		// echo json_encode($_POST);
 		// exit;
 		$message = [
 			'type' => 'contact',
