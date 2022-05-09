@@ -22,18 +22,10 @@
     <script src="js/respond.min.js"></script>
     <![endif]-->
 	<link rel="shortcut icon" href="<?php echo SITE_PATH ?>corlate/images/ico/favicon.ico">
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="corlate/images/ico/apple-touch-icon-144-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="corlate/images/ico/apple-touch-icon-114-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="corlate/images/ico/apple-touch-icon-72-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" href="corlate/images/ico/apple-touch-icon-57-precomposed.png">
-
-
-
-
-
-
-
-
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-57-precomposed.png">
 
 
 	<!-- Viejo -->
@@ -53,7 +45,7 @@
 	<!-- <script src="js/owl.carousel.js"></script> -->
 
 
-	<!-- Tostadas para el error del validate.php -->
+	<!-- Tostadas -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -62,13 +54,10 @@
 	<script src="<?php echo SITE_PATH ?>views\js\utils.js"></script>
 	<script src="<?php echo SITE_PATH ?>modules\search\view\js\search.js"></script>
 
-	<script src="<?php echo SITE_PATH ?>modules\login\controller\controller_login.js"></script>
+	<script src="<?php echo SITE_PATH ?>modules\login\view\js\login.js"></script>
+	<!-- <script src="<?php echo SITE_PATH ?>modules\login\model\register.js"></script> -->
 	<script src="<?php echo SITE_PATH ?>views\js\main.js"></script>
 	<script src="<?php echo SITE_PATH ?>model\activity.js"></script>
-
-	
-	<script src="<?php echo SITE_PATH ?>modules/contact/view/js/contact_list.js"></script>
-
 
 
 </head>

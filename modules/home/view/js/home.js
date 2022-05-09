@@ -9,7 +9,7 @@ function loadSlider() {
     //   type: "GET",
 
     .then(function (data) {
-      console.log(data);
+      // console.log(data);
       $('<div></div>').attr('id', 'Div1').appendTo('#slider');
 
       $('#Div1').html(function () {
@@ -78,7 +78,7 @@ function loadCategories() {
     'GET', 'JSON')
 
     .then(function (data) {
-      console.log(data);
+      // console.log(data);
 
 
       $('<section></section>').attr({ 'id': "feature" }).appendTo('#categories');
@@ -113,7 +113,7 @@ function loadTypes() {
     'GET', 'JSON')
 
     .then(function (data) {
-      console.log(data);
+      // console.log(data);
 
       $('<section></section>').attr({ 'id': "feature" }).appendTo('#types');
       $('<div></div>').attr({ 'id': "div11", 'class': 'container' }).appendTo('#feature');

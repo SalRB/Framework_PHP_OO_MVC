@@ -55,7 +55,7 @@
 	<script src="<?php echo SITE_PATH ?>views/inc/translate.js"></script>
 	<script src="<?php echo SITE_PATH ?>modules\home\controller\controller_home.js"></script>
 	<script src="<?php echo SITE_PATH ?>views\js\utils.js"></script>
-	<script src="<?php echo SITE_PATH ?>modules\search\controller\controller_search.js"></script>
+	<script src="<?php echo SITE_PATH ?>modules\search\view\js\search.js"></script>
 
 	<script src="<?php echo SITE_PATH ?>modules\login\controller\controller_login.js"></script>
 	<script src="<?php echo SITE_PATH ?>views\js\main.js"></script>
@@ -63,6 +63,11 @@
 
 	<script src="<?php echo JS_VIEW_HOME ?>home.js"></script>
 
+	<script src="<?php echo SITE_PATH ?>corlate/js/bootstrap.min.js"></script>
+	<script src="<?php echo SITE_PATH ?>corlate/js/jquery.prettyPhoto.js"></script>
+	<script src="<?php echo SITE_PATH ?>corlate/js/owl.carousel.min.js"></script>
+	<script src="<?php echo SITE_PATH ?>corlate/js/jquery.isotope.min.js"></script>
+	<script src="<?php echo SITE_PATH ?>corlate/js/main.js"></script>
 
 </head>
 

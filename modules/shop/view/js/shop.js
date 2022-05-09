@@ -232,7 +232,7 @@ function all_lists_products() {
     // console.log(all_filters);
 
     countCars(friendlyURL("?module=shop&op=CountWithFilters"), 'POST', all_filters);
-    ajaxForSearch(friendlyURL("?module=shop&op=Filters"), 'POST', all_filters); // Es probable que esto sobre y por eso se duplican cosas
+    ajaxForSearch(friendlyURL("?module=shop&op=Filters"), 'POST', all_filters);
 
 }
 

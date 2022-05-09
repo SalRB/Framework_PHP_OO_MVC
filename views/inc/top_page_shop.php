@@ -22,12 +22,9 @@
     <script src="js/respond.min.js"></script>
     <![endif]-->
 	<link rel="shortcut icon" href="<?php echo SITE_PATH ?>corlate/images/ico/favicon.ico">
-	<link rel="apple-touch-icon-precomposed" sizes="144x144"
-		href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-144-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114"
-		href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-114-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72"
-		href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-72-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" href="corlate/images/ico/apple-touch-icon-57-precomposed.png">
 
 
@@ -69,13 +66,21 @@
 	<script src="<?php echo SITE_PATH ?>views/inc/translate.js"></script>
 	<script src="<?php echo SITE_PATH ?>modules\shop\controller\controller_shop.js"></script>
 	<script src="<?php echo SITE_PATH ?>views\js\utils.js"></script>
-	<script src="<?php echo SITE_PATH ?>modules\search\controller\controller_search.js"></script>
+	<script src="<?php echo SITE_PATH ?>modules\search\view\js\search.js"></script>
 
-    <script src="<?php echo SITE_PATH ?>modules\login\controller\controller_login.js"></script>
-    <script src="<?php echo SITE_PATH ?>views\js\main.js"></script>
+	<script src="<?php echo SITE_PATH ?>modules\login\controller\controller_login.js"></script>
+	<script src="<?php echo SITE_PATH ?>views\js\main.js"></script>
 	<script src="<?php echo SITE_PATH ?>model\activity.js"></script>
 
 	<script src="<?php echo JS_VIEW_SHOP ?>shop.js"></script>
+
+
+	<script src="<?php echo SITE_PATH ?>corlate/js/bootstrap.min.js"></script>
+	<script src="<?php echo SITE_PATH ?>corlate/js/jquery.prettyPhoto.js"></script>
+	<script src="<?php echo SITE_PATH ?>corlate/js/owl.carousel.min.js"></script>
+	<script src="<?php echo SITE_PATH ?>corlate/js/jquery.isotope.min.js"></script>
+	<script src="<?php echo SITE_PATH ?>corlate/js/main.js"></script>
+
 
 
 </head>
