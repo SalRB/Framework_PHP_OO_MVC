@@ -8,9 +8,17 @@ function load_menu() {
     $('<a></a>').attr({ 'class': 'menu-btn', 'id': 'home', 'href': friendlyURL("?module=home&op=view"), 'data-tr': 'Home' }).html('Inicio').appendTo('.home-button');
     $('<a></a>').attr({ 'class': 'menu-btn', 'id': 'shop', 'href': friendlyURL("?module=shop&op=view"), 'data-tr': 'Shop' }).html('Tienda').appendTo('.shop-button');
 
-    ajaxPromise('modules/login/controller/controller_login.php?op=data_user', 'POST', 'JSON',
-        { token: localStorage.getItem('token') })
+    token = localStorage.getItem('token');
+    if (token) {
+        token = token.split('"');
+        token = token[1];
+    }
+    // console.log(token);
+
+    ajaxPromise(friendlyURL("?module=login&op=data_user"), 'POST', 'JSON',
+        { token })
         .then(function (data) {
+            // console.log(data);
             $('<a></a>').attr({ 'class': 'menu-btn', 'id': 'logout' }).html('Log out').appendTo('#liLogin');
         }).catch(function (e) {
             $('<a></a>').attr({ 'class': 'menu-btn', 'id': 'login', 'href': friendlyURL("?module=login&op=view") }).html('Login').appendTo('#liLogin');
@@ -27,13 +35,13 @@ function click_logout() {
 /*==================== LOGOUT ====================*/
 function logout() {
     $.ajax({
-        url: 'modules/login/controller/controller_login.php?op=logout',
+        url: friendlyURL("?module=login&op=logout"),
         type: 'POST',
         dataType: 'JSON'
     }).done(function (data) {
         console.log(data);
         localStorage.removeItem('token');
-        window.location.href = "index.php?module=home&op=view";
+        window.location.href = friendlyURL("?module=home&op=view");
     }).fail(function (e) {
         console.log(e);
     });

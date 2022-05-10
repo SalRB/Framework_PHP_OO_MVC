@@ -6,14 +6,13 @@ function login() {
         // console.log($('#login_form').serialize());
         // ajaxPromise('modules/login/controller/controller_login.php?op=login',
         //     'POST', 'JSON', data)
-
         $.ajax({
             url: friendlyURL("?module=login&op=login"),
             dataType: "JSON",
             type: "POST",
             data: data,
         }).done(function (result) {
-            console.log(result);
+            // console.log(result);
             if (result == "error") {
                 $("#error_login_password").html('La contraseña no es correcta');
             } else {
@@ -217,14 +216,24 @@ function validate_register() {
 
 // ------------------- RECOVER PASSWORD ------------------------ //
 function load_form_recover_password() {
-    $('<form></form>').attr({ 'id': 'email__form', 'method': 'post' }).html('<h2>Recover password</h2>').appendTo('.container');
+    $('.login-html').empty();
+    $('<form></form>').attr({ 'id': 'email__form', 'method': 'post' }).html('<h2 style="color:white;">Recover password</h2>').appendTo('.login-html');
     $('<div></div>').attr({ 'class': 'form__content' }).appendTo('#email__form');
-    $('<div></div>').attr({ 'class': 'form__input' }).html('<label for="email"><b>Email</b></label>' +
-        '<input type="text" placeholder="Enter email" id="email" name="email" required>' +
+    $('<div></div>').attr({ 'class': 'form__input' }).html('<label style="color:white;" for="email"><b>Email: </b></label>' +
+        '<input type="text" class="input" placeholder="Enter email" id="email" name="email" required><br>' +
         '<font color="red"><span id="error_email" class="error"></span></font>').appendTo('.form__content');
     $('<div></div>').attr({ 'class': 'button_container' }).html('<input class="button" id="button_email" type="button" value = "Enter"/>').appendTo('.form__content');
     click_recover_password();
 }
+
+function click_forgot_button() {
+
+    $('#forgot').on('click', function (e) {
+        e.preventDefault();
+        load_form_recover_password();
+    });
+}
+
 
 function click_recover_password() {
     $("#email__form").keypress(function (e) {
@@ -263,20 +272,19 @@ function validate_recover_password() {
 }
 
 function send_recover_password() {
+
     if (validate_recover_password() != 0) {
-        var data = { email: $('#email').val() };
-        $.ajax({
-            url: friendlyURL('?module=login&op=send_recover_email'),
-            dataType: 'json',
-            type: "POST",
-            data: data,
-        }).done(function (data) {
-            toastr.success('Email sended');
-        }).fail(function (textStatus) {
-            if (console && console.log) {
-                console.log("La solicitud ha fallado: " + textStatus);
-            }
-        });
+        var email = $('#email').val();
+
+        ajaxPromise(friendlyURL('?module=login&op=send_recover_email'), 'POST', 'JSON',
+            { email })
+            .then(function (data) {
+                // console.log(data);
+                toastr.success('Email sended');
+            }).catch(function (e) {
+                console.log(e);
+                toastr.error('Error');
+            });
     }
 }
 
@@ -395,6 +403,6 @@ $(document).ready(function () {
     button_register();
     key_login();
     button_login();
-
+    click_forgot_button();
 
 });

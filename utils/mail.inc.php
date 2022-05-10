@@ -18,6 +18,7 @@ class mail
                 $email['inputMessage'] = "<h2>Email verification.</h2><a href = 'http://localhost/Framework_PHP_OO_MVC/login/view/verify/$email[token]'>Click here for verify your email.</a>";
                 break;
             case 'recover';
+                $email['toEmail'] = 'salroiba03@gmail.com';
                 $email['fromEmail'] = 'salroiba03@gmail.com';
                 $email['inputEmail'] = 'salroiba03@gmail.com';
                 $email['inputMatter'] = 'Recover password';

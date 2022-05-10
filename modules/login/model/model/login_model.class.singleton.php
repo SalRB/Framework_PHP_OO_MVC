@@ -39,7 +39,7 @@ class login_model
 
     public function get_recover_email($args)
     {
-        return $this->bll->get_recover_email_BBL($args);
+        return $this->bll->get_recover_email_BLL($args);
     }
 
     // public function get_recover_password($args) {

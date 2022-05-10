@@ -8,6 +8,8 @@ class controller_login
 
     function login()
     {
+        // echo json_encode($_POST['username']);
+        // exit;
         echo json_encode(common::load_model('login_model', 'get_login', [$_POST['username'], $_POST['password']]));
     }
 
@@ -18,12 +20,7 @@ class controller_login
 
     function register()
     {
-        // echo json_encode($_POST);
-        // exit;
-
-        // $result = json_encode(common::load_model('login_model', 'get_register', [$_POST['username'], $_POST['email'],  $_POST['password']]));
         $result = json_encode(common::load_model('login_model', 'get_register', $_POST));
-        // exit;
         if ($result) {
             $message = [
                 'type' => 'validate',
@@ -56,7 +53,15 @@ class controller_login
 
     function send_recover_email()
     {
+
+        // echo json_encode($_POST['email']);
+        // exit;
         $result = json_encode(common::load_model('login_model', 'get_recover_email', $_POST['email']));
+        // echo json_encode($result);
+        // exit;
+        $result = explode('"', $result);
+        $result = $result[1];
+
         if ($result) {
             $message = [
                 'type' => 'recover',
@@ -64,9 +69,9 @@ class controller_login
                 'toEmail' => $_POST['email']
             ];
             $email = json_decode(mail::send_email($message), true);
+
             if (!empty($email)) {
-                //echo json_encode($email); 
-                //echo json_encode($result);
+                echo json_encode('done'); 
                 return;
             }
         } else {
