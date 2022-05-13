@@ -21,11 +21,34 @@ class login_bll
 
 	public function get_register_BLL($args)
 	{
+		// hacer un hash con el usuario para el UUID
+
+		// Usar una @ antes del usuario y contraseña para que puedan repetirse mientras sean de metodos de login distintos
+
+		// return hash('ripemd160', $args['username']);
+		// exit;
+
+		// $hashed_pass = password_hash($args['password'], PASSWORD_DEFAULT);
+		// $hashavatar = md5(strtolower(trim($args['email'])));
+		// $avatar = "https://robohash.org/$hashavatar";
+		// $token = common::generate_Token_secure(20);
+		// $this->dao->insert_user($this->db, $args['username'], $args['email'], $hashed_pass, $avatar, $token);
+
+
+
 		$hashed_pass = password_hash($args['password'], PASSWORD_DEFAULT);
 		$hashavatar = md5(strtolower(trim($args['email'])));
 		$avatar = "https://robohash.org/$hashavatar";
 		$token = common::generate_Token_secure(20);
-		$this->dao->insert_user($this->db, $args['username'], $args['email'], $hashed_pass, $avatar, $token);
+
+		$select = $this->dao->insert_user($this->db, $args['username'], $args['email'], $hashed_pass, $avatar, $token);
+
+		if (!$select) {
+			return 'error';
+			exit;
+		}
+
+
 		return $token;
 	}
 
@@ -42,8 +65,16 @@ class login_bll
 
 	public function get_social_login_BLL($args)
 	{
-		$user = $this->dao->select_user($this->db, $args);
-		$jwt = jwt_process::encode($user[0]['nombre']);
+
+
+		$user = $this->dao->select_user_v2($this->db, $args[3]);
+
+		if (!$user) {
+			return $this->dao->insert_social_login($this->db, $args[0], $args[1], $args[2], $args[3]);
+			exit;
+		}
+
+		$jwt = jwt_process::encode($user[0]['username']);
 		return json_encode($jwt);
 	}
 
@@ -77,6 +108,8 @@ class login_bll
 
 	public function get_new_password_BLL($args)
 	{
+		// return $args[1];
+		// exit;
 		$hashed_pass = password_hash($args[1], PASSWORD_DEFAULT, ['cost' => 12]);
 		if ($this->dao->update_new_passwoord($this->db, $args[0], $hashed_pass)) {
 			return 'new_password';

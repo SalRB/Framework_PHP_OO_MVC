@@ -15,13 +15,13 @@ class controller_login
 
     function social_login()
     {
-        echo json_encode(common::load_model('login_model', 'get_social_login', $_POST['profile']));
+        echo json_encode(common::load_model('login_model', 'get_social_login', $_POST['user_data']));
     }
 
     function register()
     {
         $result = json_encode(common::load_model('login_model', 'get_register', $_POST));
-        if ($result) {
+        if ($result != '"error"') {
             $message = [
                 'type' => 'validate',
                 'token' => $result,
@@ -29,13 +29,11 @@ class controller_login
             ];
             $email = json_decode(mail::send_email($message), true);
             if (!empty($email)) {
-                //echo json_encode($email); 
-                //echo json_encode($result);
                 echo json_encode('enviado');
                 return;
             }
         } else {
-            echo json_encode('fail');
+            echo json_encode('error');
             return;
         }
     }
@@ -53,12 +51,7 @@ class controller_login
 
     function send_recover_email()
     {
-
-        // echo json_encode($_POST['email']);
-        // exit;
         $result = json_encode(common::load_model('login_model', 'get_recover_email', $_POST['email']));
-        // echo json_encode($result);
-        // exit;
         $result = explode('"', $result);
         $result = $result[1];
 
@@ -71,7 +64,7 @@ class controller_login
             $email = json_decode(mail::send_email($message), true);
 
             if (!empty($email)) {
-                echo json_encode('done'); 
+                echo json_encode('done');
                 return;
             }
         } else {
@@ -91,9 +84,13 @@ class controller_login
 
     function new_password()
     {
-        $password = json_encode(common::load_model('login_model', 'get_new_password', [$_POST['token'], $_POST['password']]));
+        // echo json_encode([$_POST['data']['token'], $_POST['data']['password']]);
+        // exit;
+        $password = json_encode(common::load_model('login_model', 'get_new_password', [$_POST['data']['token'], $_POST['data']['password']]));
+        echo json_encode($password);
+        exit;
         if (!empty($password)) {
-            echo $password;
+            echo json_encode($password);
             return;
         }
     }

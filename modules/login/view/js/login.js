@@ -65,59 +65,90 @@ function validate_login() {
 }
 
 
+function click_social_login() {
 
-// function social_login(param){
-//     authService = firebase_config();
-//     authService.signInWithPopup(provider_config(param))
-//     .then(function(result) {
-//         console.log('Hemos autenticado al usuario ', result.user);
-//         console.log(result.user.displayName);
-//         console.log(result.user.email);
-//         console.log(result.user.photoURL);
-//         /*
-//         if (result) 
-//             $.ajax({url: friendlyURL('?module=login&op=social_login')
-//         */
-//     })
-//     .catch(function(error) {
-//         console.log('Se ha encontrado un error:', error);
-//     });
-// }
+    $('#google').on('click', function (e) {
+        social_login('google');
+    });
 
-// function firebase_config(){
-//     var config = {
-//         apiKey: "AIzaSyD4soE7aA8WvGMh3XNmfJQgn8hDVDuLflU",
-//         authDomain: "website-306519.firebaseapp.com",
-//         databaseURL: "https://website-306519.firebaseio.com",
-//         projectId: "website-306519",
-//         storageBucket: "",
-//         messagingSenderId: "290934934779"
-//     };
-//     if(!firebase.apps.length){
-//         firebase.initializeApp(config);
-//     }else{
-//         firebase.app();
-//     }
-//     return authService = firebase.auth();
-// }
+    $('#github').on('click', function (e) {
+        social_login('github');
+    });
+}
 
-// function provider_config(param){
-//     if(param === 'google'){
-//         var provider = new firebase.auth.GoogleAuthProvider();
-//         provider.addScope('email');
-//         return provider;
-//     }else if(param === 'github'){
-//         return provider = new firebase.auth.GithubAuthProvider();
-//     }
-// }
+
+function social_login(param) {
+    authService = firebase_config();
+    authService.signInWithPopup(provider_config(param))
+        .then(function (result) {
+            // console.log(result);
+            // console.log('Hemos autenticado al usuario ', result.user);
+            // console.log(result.user.displayName);
+            // console.log(result.user.email);
+            // console.log(result.user.photoURL);
+
+            username = result.user.displayName;
+            email = result.user.email;
+            pfp = result.user.photoURL;
+            UUID = param + '-' + result.user.uid;
+            // console.log(UUID);
+            user_data = [username, email, pfp, UUID];
+
+            ajaxPromise(friendlyURL('?module=login&op=social_login'), 'POST', 'JSON', { user_data })
+                .then(function (data) {
+                    // console.log(data);
+                    localStorage.setItem("token", data);
+                    toastr.success("Login successful");
+                    setTimeout(' window.location.href = friendlyURL("?module=home&op=view"); ', 1000);
+
+                }).catch(function (e) {
+                    console.log(e);
+                });
+
+
+
+        })
+        .catch(function (error) {
+            console.log('Se ha encontrado un error:', error);
+        });
+}
+
+function firebase_config() {
+    var config = {
+
+        apiKey: "AIzaSyA33OBjF0VuAelFYUJas3EsW2lLbxtgxus",
+        authDomain: "fir-346614.firebaseapp.com",
+        projectId: "firebase-346614",
+        storageBucket: "firebase-346614.appspot.com",
+        messagingSenderId: "401305423579",
+        appId: "1:401305423579:web:dc710cd213c76f87cc06fe",
+        databaseURL: "https://website-306519.firebaseio.com"
+
+    };
+    if (!firebase.apps.length) {
+        firebase.initializeApp(config);
+    } else {
+        firebase.app();
+    }
+    return authService = firebase.auth();
+}
+
+function provider_config(param) {
+    if (param === 'google') {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('email');
+        return provider;
+    } else if (param === 'github') {
+        return provider = new firebase.auth.GithubAuthProvider();
+    }
+}
 
 // ------------------- REGISTER ------------------------ //
 
 function register() {
-    console.log('a');
     if (validate_register() != 0) {
         var data = $('#register_form').serialize();
-        console.log(data);
+        // console.log(data);
         // ajaxPromise('modules/login/controller/controller_login.php?op=register',
         //     'GET', 'JSON', data)
         $.ajax({
@@ -128,7 +159,14 @@ function register() {
 
 
         }).done(function (result) {
-            toastr.success('Verification email sended');
+            // console.log(result);
+
+            if (result == 'error') {
+                toastr.error('Username or email already in use');
+            } else {
+                toastr.success('Verification email sended');
+            }
+
             // if ((result == "error_username") || (result == "error_email") || (result == "error_email_username")) {
             //     $("#error_username").empty();
             //     $("#error_email").empty();
@@ -289,32 +327,33 @@ function send_recover_password() {
 }
 
 function load_form_new_password(token) {
-    $.ajax({
-        url: friendlyURL('?module=login&op=verify_token'),
-        dataType: 'json',
-        type: "POST",
-        data: { token: token },
-    }).done(function (data) {
-        if (data == "verify") {
-            console.log(data);
-            $('<form></form>').attr({ 'id': 'new_password__form', 'method': 'post' }).html('<h2>New password</h2>').appendTo('.container');
+    // console.log(token);
+
+
+    ajaxPromise(friendlyURL('?module=login&op=verify_token'), 'POST', 'JSON', { token })
+        .then(function (data) {
+            // console.log(data);
+            // toastr.success('Email sended');
+            $('.login-html').empty();
+            $('<form></form>').attr({ 'id': 'new_password__form', 'method': 'post' }).html('<h2 style="color:white;">New password</h2>').appendTo('.login-html');
             $('<div></div>').attr({ 'class': 'form__content' }).appendTo('#new_password__form');
-            $('<div></div>').attr({ 'class': 'form__input' }).html('<label for="password"><b>Password</b></label>' +
-                '<input type="text" placeholder="Enter password" id="password" name="password" required>' +
+            $('<div></div>').attr({ 'class': 'form__input' }).html('<label for="password"><b style="color:white;">New password:</b></label>' +
+                '<input type="password" placeholder="Enter password" id="password" name="password" required>' +
                 '<font color="red"><span id="error_password" class="error"></span></font>').appendTo('.form__content');
-            $('<div></div>').attr({ 'class': 'form__input' }).html('<label for="password1"><b>Password</b></label>' +
-                '<input type="text" placeholder="Enter password" id="password1" name="password1" required>' +
+            $('<div></div>').attr({ 'class': 'form__input' }).html('<label for="password1"><b style="color:white;">Repeat password:</b></label>' +
+                '<input type="password" placeholder="Enter password" id="password1" name="password1" required>' +
                 '<font color="red"><span id="error_password1" class="error"></span></font>').appendTo('.form__content');
             $('<div></div>').attr({ 'class': 'button_container' }).html('<input class="button" id="recover" type="button" value = "Enter"/>').appendTo('.form__content');
             click_new_password(token);
-        } else {
-            console.log("error");
-        }
-    }).fail(function (textStatus) {
-        if (console && console.log) {
-            console.log("La solicitud ha fallado: " + textStatus);
-        }
-    });
+
+
+
+        }).catch(function (e) {
+            console.log(e);
+            // toastr.error('Error');
+        });
+
+
 }
 
 function click_new_password(token) {
@@ -349,27 +388,27 @@ function validate_new_password() {
                 error = true;
             } else {
                 document.getElementById('error_password').innerHTML = "";
+                error = false;
             }
         }
     }
+    return error;
 }
 
 function send_new_password(token) {
-    if (validate_new_password() != 0) {
+
+    if (validate_new_password() == false) {
         var data = { token: token, password: $('#password').val() };
-        console.log(data);
-        $.ajax({
-            url: friendlyURL("?module=login&op=new_password"),
-            type: "POST",
-            dataType: "JSON",
-            data: data,
-        }).done(function (data) {
-            toastr.success('New password');
-        }).fail(function (textStatus) {
-            if (console && console.log) {
-                console.log("La solicitud ha fallado: " + textStatus);
-            }
-        });
+        // console.log(data);
+
+        ajaxPromise(friendlyURL("?module=login&op=new_password"), 'POST', 'JSON', { data })
+            .then(function (data) {
+                toastr.success('Password updated');
+                setTimeout(' window.location.href = friendlyURL("?module=login&op=view"); ', 1000);
+
+            }).catch(function (e) {
+                console.log(e);
+            });
     }
 }
 
@@ -379,8 +418,8 @@ function load_content() {
     // console.log(path[3]);
 
     // $('.container').empty();
-    if (path[3] === 'recover') {
-        load_form_new_password(path[4]);
+    if (path[4] === 'recover') {
+        load_form_new_password(path[5]);
     } else if (path[4] === 'verify') {
         token = path[5].split('%22');
         token = token[1]
@@ -390,6 +429,7 @@ function load_content() {
             'POST', 'JSON', { token })
 
     }
+
     //  else if (path[2] === 'register') {
     //     load_register();
     // } else if (path[2] === 'login') {
@@ -404,5 +444,5 @@ $(document).ready(function () {
     key_login();
     button_login();
     click_forgot_button();
-
+    click_social_login();
 });

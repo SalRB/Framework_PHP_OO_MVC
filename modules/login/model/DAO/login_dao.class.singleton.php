@@ -29,6 +29,13 @@ class login_dao
         return $db->listar($stmt);
     }
 
+    public function select_user_v2($db, $UUID)
+    {
+        $sql = "SELECT `UUID`, `username`, `email`, `passwd`, `type`, `avatar`, `token_email`, `active` FROM `users` WHERE UUID='$UUID'";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
+
     public function select_social_login($db, $id)
     {
         $sql = "SELECT * FROM `users` WHERE id='$id'";
@@ -36,10 +43,12 @@ class login_dao
         return $db->listar($stmt);
     }
 
-    public function insert_social_login($db, $id, $username, $email, $avatar)
+    public function insert_social_login($db, $username, $email, $avatar, $UUID)
     {
-        $sql = "INSERT INTO `users`(`nombre`, `email`, `password`, `type`, `avatar`, `token_email`, `activate`, `id`)     
-                VALUES ('$username','$email','','client', '$avatar','', 1, '$id')";
+        $sql = "INSERT INTO `users`(`username`, `email`, `type`, `avatar`, `UUID`)     
+                VALUES ('$username','$email','client', '$avatar', '$UUID')";
+        return $sql;
+        exit;
         return $stmt = $db->ejecutar($sql);
     }
 
@@ -80,7 +89,7 @@ class login_dao
 
     public function update_new_passwoord($db, $token, $password)
     {
-        $sql = "UPDATE `users` SET `password`= '$password', `token_email`= '' WHERE `token_email` = '$token'";
+        $sql = "UPDATE `users` SET `passwd`= '$password', `token_email`= '', `active`= 1 WHERE `token_email` = '$token'";
         $stmt = $db->ejecutar($sql);
         return "ok";
     }

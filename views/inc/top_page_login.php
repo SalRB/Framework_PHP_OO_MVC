@@ -49,13 +49,18 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+	<!-- <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script> -->
+
+	<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+
 
 	<script src="<?php echo SITE_PATH ?>views/inc/translate.js"></script>
 	<script src="<?php echo SITE_PATH ?>views\js\utils.js"></script>
 	<script src="<?php echo SITE_PATH ?>modules\search\view\js\search.js"></script>
 
 	<script src="<?php echo SITE_PATH ?>modules\login\view\js\login.js"></script>
-	<!-- <script src="<?php echo SITE_PATH ?>modules\login\model\register.js"></script> -->
 	<script src="<?php echo SITE_PATH ?>views\js\main.js"></script>
 	<script src="<?php echo SITE_PATH ?>model\activity.js"></script>
 
