@@ -81,22 +81,18 @@ function social_login(param) {
     authService = firebase_config();
     authService.signInWithPopup(provider_config(param))
         .then(function (result) {
-            // console.log(result);
-            // console.log('Hemos autenticado al usuario ', result.user);
-            // console.log(result.user.displayName);
-            // console.log(result.user.email);
-            // console.log(result.user.photoURL);
 
-            username = result.user.displayName;
-            email = result.user.email;
+            // Procesado para que puedan repetirse usuarios y mails siempre y cuando utilicen metodos de log distintos
+
+            username = param + '-' + result.user.displayName;
+            email = param + '-' + result.user.email;
             pfp = result.user.photoURL;
             UUID = param + '-' + result.user.uid;
-            // console.log(UUID);
             user_data = [username, email, pfp, UUID];
 
             ajaxPromise(friendlyURL('?module=login&op=social_login'), 'POST', 'JSON', { user_data })
                 .then(function (data) {
-                    // console.log(data);
+                    console.log(data);
                     localStorage.setItem("token", data);
                     toastr.success("Login successful");
                     setTimeout(' window.location.href = friendlyURL("?module=home&op=view"); ', 1000);

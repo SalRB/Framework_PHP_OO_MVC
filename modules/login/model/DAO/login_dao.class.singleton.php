@@ -15,10 +15,10 @@ class login_dao
         return self::$_instance;
     }
 
-    public function insert_user($db, $username, $email, $password, $avatar, $token)
+    public function insert_user($db, $username, $email, $password, $avatar, $token, $UUID)
     {
         $sql = "INSERT INTO `users`(`username`, `email`, `passwd`, `type`, `avatar`, `token_email`, `active`, `UUID`)     
-                VALUES ('$username','$email','$password','client', '$avatar','$token', 0, '')";
+                VALUES ('$username','$email','$password','client', '$avatar','$token', 0, '$UUID')";
         return $stmt = $db->ejecutar($sql);
     }
 
@@ -29,7 +29,7 @@ class login_dao
         return $db->listar($stmt);
     }
 
-    public function select_user_v2($db, $UUID)
+    public function select_user_social($db, $UUID)
     {
         $sql = "SELECT `UUID`, `username`, `email`, `passwd`, `type`, `avatar`, `token_email`, `active` FROM `users` WHERE UUID='$UUID'";
         $stmt = $db->ejecutar($sql);
@@ -47,17 +47,15 @@ class login_dao
     {
         $sql = "INSERT INTO `users`(`username`, `email`, `type`, `avatar`, `UUID`)     
                 VALUES ('$username','$email','client', '$avatar', '$UUID')";
-        return $sql;
-        exit;
         return $stmt = $db->ejecutar($sql);
     }
 
-    public function update_token_jwt($db, $token, $email)
-    {
-        $sql = "UPDATE `users` SET `UUID`= '$token' WHERE `email` = '$email'";
-        $stmt = $db->ejecutar($sql);
-        return "update";
-    }
+    // public function update_token_jwt($db, $token, $email)
+    // {
+    //     $sql = "UPDATE `users` SET `UUID`= '$token' WHERE `email` = '$email'";
+    //     $stmt = $db->ejecutar($sql);
+    //     return "update";
+    // }
 
     public function select_verify_email($db, $token)
     {
