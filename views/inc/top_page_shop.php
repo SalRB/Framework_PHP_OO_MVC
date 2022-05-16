@@ -9,23 +9,23 @@
 	<title>BioCars idk</title>
 
 	<!-- core CSS -->
-	<link href="<?php echo SITE_PATH ?>corlate/css/bootstrap.min.css" rel="stylesheet">
-	<link href="<?php echo SITE_PATH ?>corlate/css/font-awesome.min.css" rel="stylesheet">
-	<link href="<?php echo SITE_PATH ?>corlate/css/animate.min.css" rel="stylesheet">
-	<link href="<?php echo SITE_PATH ?>corlate/css/prettyPhoto.css" rel="stylesheet">
-	<link href="<?php echo SITE_PATH ?>corlate/css/owl.carousel.min.css" rel="stylesheet">
-	<link href="<?php echo SITE_PATH ?>corlate/css/icomoon.css" rel="stylesheet">
-	<link href="<?php echo SITE_PATH ?>corlate/css/main.css" rel="stylesheet">
-	<link href="<?php echo SITE_PATH ?>corlate/css/responsive.css" rel="stylesheet">
+	<link href="<?php echo SITE_PATH ?>views/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo SITE_PATH ?>views/css/font-awesome.min.css" rel="stylesheet">
+	<link href="<?php echo SITE_PATH ?>views/css/animate.min.css" rel="stylesheet">
+	<link href="<?php echo SITE_PATH ?>views/css/prettyPhoto.css" rel="stylesheet">
+	<link href="<?php echo SITE_PATH ?>views/css/owl.carousel.min.css" rel="stylesheet">
+	<link href="<?php echo SITE_PATH ?>views/css/icomoon.css" rel="stylesheet">
+	<link href="<?php echo SITE_PATH ?>views/css/main.css" rel="stylesheet">
+	<link href="<?php echo SITE_PATH ?>views/css/responsive.css" rel="stylesheet">
 	<!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
-	<link rel="shortcut icon" href="<?php echo SITE_PATH ?>corlate/images/ico/favicon.ico">
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-144-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-114-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo SITE_PATH ?>corlate/images/ico/apple-touch-icon-72-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" href="corlate/images/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="<?php echo SITE_PATH ?>views/images/ico/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo SITE_PATH ?>views/images/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo SITE_PATH ?>views/images/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo SITE_PATH ?>views/images/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="views/images/ico/apple-touch-icon-57-precomposed.png">
 
 
 	<!-- Viejo -->
@@ -63,23 +63,22 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
-	<script src="<?php echo SITE_PATH ?>views/inc/translate.js"></script>
+	<script src="<?php echo SITE_PATH ?>views/js/translate.js"></script>
 	<script src="<?php echo SITE_PATH ?>modules\shop\controller\controller_shop.js"></script>
 	<script src="<?php echo SITE_PATH ?>views\js\utils.js"></script>
 	<script src="<?php echo SITE_PATH ?>modules\search\view\js\search.js"></script>
 
 	<script src="<?php echo SITE_PATH ?>modules\login\controller\controller_login.js"></script>
 	<script src="<?php echo SITE_PATH ?>views\js\main.js"></script>
-	<script src="<?php echo SITE_PATH ?>model\activity.js"></script>
+	<script src="<?php echo SITE_PATH ?>views\js\activity.js"></script>
 
 	<script src="<?php echo JS_VIEW_SHOP ?>shop.js"></script>
 
 
-	<script src="<?php echo SITE_PATH ?>corlate/js/bootstrap.min.js"></script>
-	<script src="<?php echo SITE_PATH ?>corlate/js/jquery.prettyPhoto.js"></script>
-	<script src="<?php echo SITE_PATH ?>corlate/js/owl.carousel.min.js"></script>
-	<script src="<?php echo SITE_PATH ?>corlate/js/jquery.isotope.min.js"></script>
-	<script src="<?php echo SITE_PATH ?>corlate/js/main.js"></script>
+	<script src="<?php echo SITE_PATH ?>views/js/bootstrap.min.js"></script>
+	<script src="<?php echo SITE_PATH ?>views/js/jquery.prettyPhoto.js"></script>
+	<script src="<?php echo SITE_PATH ?>views/js/owl.carousel.min.js"></script>
+	<script src="<?php echo SITE_PATH ?>views/js/jquery.isotope.min.js"></script>
 
 
 

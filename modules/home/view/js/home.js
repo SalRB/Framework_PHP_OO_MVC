@@ -92,7 +92,7 @@ function loadCategories() {
 
       for (row in data) {
 
-        $('<div></div>').attr({ 'id': 'div5' + row, 'class': 'col-md-3 col-sm-4 fadeInDown ' + data[row].category_name + ' divCategory', 'patata': data[row].category_name, }).appendTo('#div4');
+        $('<div></div>').attr({ 'id': 'div5' + row, 'class': 'col-md-3 col-sm-4 fadeInDown ' + data[row].category_name + ' divCategory', 'attSearch': data[row].category_name, }).appendTo('#div4');
         $('<a></a>').attr({ 'id': "div6" + row }).appendTo('#div5' + row);
         $('<div></div>').attr({ 'id': "div7" + row, 'class': 'feature-wrap' }).appendTo('#div6' + row);
         $('<img></img>').attr({ 'id': "div8" + row, 'src': 'http://localhost/Framework_PHP_OO_MVC/views/images/home/' + data[row].category_image + '', 'style': 'border-radius: 5px' }).appendTo('#div7' + row);
@@ -123,7 +123,7 @@ function loadTypes() {
       $('<div></div>').attr({ 'id': "div14", 'class': 'features' }).appendTo('#div13');
 
       for (row in data) {
-        $('<div></div>').attr({ 'id': "div15" + row, 'class': 'col-md-3 col-sm-4 fadeInDown divType', 'patata': data[row].type_name }).appendTo('#div14');
+        $('<div></div>').attr({ 'id': "div15" + row, 'class': 'col-md-3 col-sm-4 fadeInDown divType', 'attSearch': data[row].type_name }).appendTo('#div14');
         $('<a></a>').attr({ 'id': "div16" + row }).appendTo('#div15' + row);
         $('<div></div>').attr({ 'id': "div17" + row, 'class': 'feature-wrap' }).appendTo('#div16' + row);
         $('<img></img>').attr({ 'id': "div18" + row, 'src': 'http://localhost/Framework_PHP_OO_MVC/views/images/home/' + data[row].type_image + '', 'style': 'border-radius: 5px' }).appendTo('#div17' + row);
@@ -143,23 +143,23 @@ function clicks() {
     filters.push({ "brand": [this.getAttribute('id')] });
     localStorage.removeItem('filters')
     localStorage.setItem('filters', JSON.stringify(filters));
-    window.location.href = 'index.php?module=shop&op=list';
+    window.location.href = friendlyURL("?module=shop&op=view");
   });
 
   $(document).on("click", '.divCategory', function () {
     var filters = [];
-    filters.push({ "category": [this.getAttribute('patata')] });
+    filters.push({ "category": [this.getAttribute('attSearch')] });
     localStorage.removeItem('filters')
     localStorage.setItem('filters', JSON.stringify(filters));
-    window.location.href = 'index.php?module=shop&op=list';
+    window.location.href = friendlyURL("?module=shop&op=view");
   });
 
   $(document).on("click", '.divType', function () {
     var filters = [];
-    filters.push({ "type": [this.getAttribute('patata')] });
+    filters.push({ "type": [this.getAttribute('attSearch')] });
     localStorage.removeItem('filters')
     localStorage.setItem('filters', JSON.stringify(filters));
-    window.location.href = 'index.php?module=shop&op=list';
+    window.location.href = friendlyURL("?module=shop&op=view");
   });
 
   $(document).on("click", '#divButton', function () {

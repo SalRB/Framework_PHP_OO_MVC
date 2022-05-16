@@ -104,4 +104,5 @@ class controller_login
     {
         echo json_encode(common::load_model('login_model', 'get_data_user', $_POST['token']));
     }
+
 }
