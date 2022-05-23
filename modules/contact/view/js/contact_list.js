@@ -49,13 +49,12 @@ function send_email(content_email) {
 	// console.log(content_email);
 	ajaxPromise(friendlyURL("?controller=contact&op=send_contact_us"), 'POST', 'JSON', content_email)
 		.then(function (data) {
-			console.log(data);
-			toastr.error('Something happend when trying to send.', 'Error');
-
+			// console.log(data);
+			toastr.success('Email sended');
 		})
 		.catch(function (error, data) {
-			console.log(error);
-			toastr.success('Email sended');
+			// console.log(error);
+			toastr.error('Something happend when trying to send.', 'Error');
 		});
 }
 

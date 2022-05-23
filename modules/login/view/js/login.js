@@ -3,9 +3,6 @@
 function login() {
     if (validate_login() != 0) {
         var data = $('#login_form').serialize();
-        // console.log($('#login_form').serialize());
-        // ajaxPromise('modules/login/controller/controller_login.php?op=login',
-        //     'POST', 'JSON', data)
         $.ajax({
             url: friendlyURL("?module=login&op=login"),
             dataType: "JSON",
@@ -20,7 +17,7 @@ function login() {
                 setTimeout(' window.location.href = friendlyURL("?module=home&op=view"); ', 1000);
             }
         }).fail(function (e) {
-            console.log(e);
+            toastr.error("El usuario no existe");
         });
     }
 }
@@ -92,7 +89,7 @@ function social_login(param) {
 
             ajaxPromise(friendlyURL('?module=login&op=social_login'), 'POST', 'JSON', { user_data })
                 .then(function (data) {
-                    console.log(data);
+                    // console.log(data);
                     localStorage.setItem("token", data);
                     toastr.success("Login successful");
                     setTimeout(' window.location.href = friendlyURL("?module=home&op=view"); ', 1000);
@@ -144,9 +141,6 @@ function provider_config(param) {
 function register() {
     if (validate_register() != 0) {
         var data = $('#register_form').serialize();
-        // console.log(data);
-        // ajaxPromise('modules/login/controller/controller_login.php?op=register',
-        //     'GET', 'JSON', data)
         $.ajax({
             url: friendlyURL("?module=login&op=register"),
             dataType: "JSON",
@@ -155,7 +149,7 @@ function register() {
 
 
         }).done(function (result) {
-            // console.log(result);
+            console.log(result);
 
             if (result == 'error') {
                 toastr.error('Username or email already in use');
@@ -163,22 +157,6 @@ function register() {
                 toastr.success('Verification email sended');
             }
 
-            // if ((result == "error_username") || (result == "error_email") || (result == "error_email_username")) {
-            //     $("#error_username").empty();
-            //     $("#error_email").empty();
-            //     if (result == "error_username") {
-            //         $("#error_username").html('El username ya esta registrado');
-            //     }
-            //     if (result == "error_email") {
-            //         $("#error_email").html('El email ya esta registrado');
-            //     }
-            //     if (result == "error_email_username") {
-            //         $("#error_username").html('El username ya esta registrado');
-            //         $("#error_email").html('El email ya esta registrado');
-            //     }
-            // } else {
-            //     setTimeout(' window.location.href = "index.php?module=login&op=list"; ', 222);
-            // }
         }).fail(function (e) {
             console.log(e);
         });
@@ -313,7 +291,7 @@ function send_recover_password() {
         ajaxPromise(friendlyURL('?module=login&op=send_recover_email'), 'POST', 'JSON',
             { email })
             .then(function (data) {
-                // console.log(data);
+                console.log(data);
                 toastr.success('Email sended');
             }).catch(function (e) {
                 console.log(e);
@@ -399,6 +377,7 @@ function send_new_password(token) {
 
         ajaxPromise(friendlyURL("?module=login&op=new_password"), 'POST', 'JSON', { data })
             .then(function (data) {
+                console.log(data);
                 toastr.success('Password updated');
                 setTimeout(' window.location.href = friendlyURL("?module=login&op=view"); ', 1000);
 
@@ -411,26 +390,15 @@ function send_new_password(token) {
 // ------------------- LOAD CONTENT ------------------------ //
 function load_content() {
     let path = window.location.pathname.split('/');
-    // console.log(path[3]);
 
-    // $('.container').empty();
     if (path[4] === 'recover') {
         load_form_new_password(path[5]);
     } else if (path[4] === 'verify') {
         token = path[5].split('%22');
         token = token[1]
-        // console.log(token);
-
         ajaxPromise(friendlyURL("?module=login&op=verify_email"),
             'POST', 'JSON', { token })
-
     }
-
-    //  else if (path[2] === 'register') {
-    //     load_register();
-    // } else if (path[2] === 'login') {
-    //     load_login();
-    // }
 }
 
 $(document).ready(function () {

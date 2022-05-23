@@ -60,4 +60,29 @@ class login_model
     {
         return $this->bll->get_data_user_BLL($args);
     }
+
+    public function get_logout()
+    {
+        return $this->bll->get_logout_BLL();
+    }
+
+    public function get_control_user($args)
+    {
+        return $this->bll->get_control_user_BLL($args);
+    }
+
+    public function get_actividad()
+    {
+        return $this->bll->get_actividad_BLL();
+    }
+
+    public function get_refresh_token($args)
+    {
+        return $this->bll->get_refresh_token_BLL($args);
+    }
+
+    public function get_refresh_cookie()
+    {
+        return $this->bll->get_refresh_cookie_BLL();
+    }
 }

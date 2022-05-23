@@ -41,12 +41,8 @@ function loadDetails(id) {
 
     ajaxPromise(friendlyURL("?module=shop&op=ShopDetails"),
         'POST', 'JSON', { id })
-        // ajaxPromise('modules/shop/controller/controller_shop.php?op=ShopDetails&id=' + id,
-        // 'GET', 'JSON')
 
         .then(function (data) {
-            // console.log(data[0].ID);
-            // console.log(data);
             ///////////////////////////////////////////
             //                SLIDER
             ///////////////////////////////////////////
@@ -107,7 +103,6 @@ function loadDetails(id) {
 
         }).catch(function (e) {
             console.log(e);
-            // window.location.href = "index.php?module=exceptions&op=503&message=Error_loadDetails_js";
         });
 }
 
@@ -127,8 +122,6 @@ function ajaxForSearch(durl, method = 'GET', params) {
             $('<div></div>').attr({ 'id': "divCars", 'class': "divCars" }).appendTo('#shopPage');
             $('<div></div>').attr({ 'id': "divPagination", 'class': "divPagination", 'style': 'margin-left: auto; margin-right: auto; width: 250px;' }).appendTo('#shopPage');
             $('<div></div>').attr({ 'id': "cosa0", 'class': "cosa0" }).appendTo('#divCars');
-            // $("#AAA").empty();
-            // $('<div></div>').attr({ 'id': "AAA", 'class': "AAA", 'style': "float: left; height: 750px; position: fluid;" }).appendTo('#shopPage').html('<p> </p>');
             $('<div></div>').attr({ 'id': "map", 'style': "margin-right: 2%; position: fixed; top: 50px; right: 1px; width: 422px; height: 700px; border-radius: 5px; margin-top: 133px;" }).appendTo('#divCars');
 
             addAPI();
@@ -143,22 +136,17 @@ function ajaxForSearch(durl, method = 'GET', params) {
                 $('<div></div>').attr({ 'class': "divImagen" + data[row].ID, 'id': "divImagen" + data[row].ID, 'style': 'position: relative;' }).appendTo('.clearfix' + row);
                 $('<img></img>').attr({ 'class': "imagen" + row, 'id': "imagen", 'src': 'http://localhost/Framework_PHP_OO_MVC/views/images/cars/' + data[row].image + '' }).appendTo('#divImagen' + data[row].ID);
 
-                // $('<i></i>').attr({ 'class': "topright fa fa-heart", 'id': "heart" }).appendTo('#divImagen' + row).html('<h3></h3>');
                 $('<i></i>').attr({ 'class': "topright fa fa-heart-o elbotondelike", 'id': "heart" + data[row].ID, 'car_id': data[row].ID }).appendTo('#divImagen' + data[row].ID).html('<h3></h3>');
-
-
-                // $('<div></div>').attr({ 'class': "heart", 'id': data[row].ID, 'style': "position: static;" }).appendTo('.cosa3' + row).html('<h3>REXTVUYGIHOIJPOK^PL</h3>');
-                // $('<i></i>').attr({ 'class': "bx bx-heart", 'id': 'like' }).appendTo('#cosa4').html('<h1>REXTVUYGIHOIJPOK^PL</h1>');
 
                 AddMarker(data, row);
             }
+
             if (data[0].length == 0) {
                 $("#divCars").empty();
                 $('<h1></h1>').html('Sin resultados para estos criterios').attr({ 'id': "A", 'style': 'margin-left: 55px;' }).appendTo('#divCars');
-                // $('<div></div>').attr({ 'id': "A", 'style': 'margin-left: 55px;' }).appendTo('#divCars').html('<h1>Sin resultados para estos criterios<h1/>');
             }
 
-            load_like();
+            // load_like();
 
         }).catch(function (e) {
             console.log(e);
@@ -184,15 +172,12 @@ function countCars(durl, method = 'GET', params) {
             } else {
                 total_pages = 1;
             }
-            // console.log(total_pages, total_prod, total_pages);
             $('#divPagination').bootpag({
                 total: total_pages,
                 page: 1,
                 maxVisible: total_pages
             }).on('page', function (event, num) {
-                // console.log(total_prod);
                 total_prod = 3 * (num - 1);
-                // console.log(total_prod);
                 if (params == undefined) {
                     var pag = [];
                     pag.push({ "limit": 3 });
@@ -201,7 +186,6 @@ function countCars(durl, method = 'GET', params) {
                 } else {
                     params.push({ "limit": 3 });
                     params.push({ "offset": total_prod });
-                    // console.log(params);
                     
                     ajaxForSearch(friendlyURL("?module=shop&op=Filters"), 'POST', params);
                 }
@@ -214,7 +198,6 @@ function countCars(durl, method = 'GET', params) {
 }
 
 function loadListCars() {
-    // console.log('load list cars');
     var filters = localStorage.getItem('filters') || false;
 
     if (filters != false) {
@@ -229,7 +212,6 @@ function loadListCars() {
 function all_lists_products() {
 
     var all_filters = JSON.parse(localStorage.getItem('filters'));
-    // console.log(all_filters);
 
     countCars(friendlyURL("?module=shop&op=CountWithFilters"), 'POST', all_filters);
     ajaxForSearch(friendlyURL("?module=shop&op=Filters"), 'POST', all_filters);
@@ -242,9 +224,6 @@ function printFilters() {
         'GET', 'JSON')
 
         .then(function (data) {
-
-            // console.log(data.brand[0].brand);
-            // console.log(data);
 
             $('<div></div>').attr({ 'id': "AAA", 'style': "margin-left: 3%; position: absolute; top: 233px" }).appendTo('#shopPage').html(
                 '<form id="form">' +
@@ -306,7 +285,6 @@ function printFilters() {
         }).catch(function (e) {
             console.log('error_print_filters');
             console.log(e);
-            // window.location.href = "index.php?module=exceptions&op=503&message=Error_loading_filters_js";
         });
 
     $(document).on('click', '#button', function () {
@@ -418,8 +396,6 @@ function SaveFilters() {
         localStorage.setItem('filters', JSON.stringify(filters));
     }
 
-    // document.filter.submit();
-    // document.filter.action = "index.php?page=controller_shop.php?op=view";
 }
 
 function addAPI() {
@@ -472,21 +448,17 @@ function CountVisits(id) {
 }
 
 function LoadRelated(id) {
-    // console.log(id);
     var related = JSON.parse(localStorage.getItem('related'));
 
     if (related[1]['offset'] == -3) {
         related.push({ "id": id });
     }
     related[1]['offset'] = related[1]['offset'] + 3;
-    // console.log(related);
 
     localStorage.setItem('related', JSON.stringify(related));
-    // console.log(related);
     ajaxPromise(friendlyURL("?module=shop&op=LoadRelated"),
         'POST', 'JSON', { related })
         .then(function (data) {
-            // console.log(data);
 
             $('<div></div>').attr({ 'id': "divRelated", 'style': "width: 70%; height: 500px; margin-top: 33px; margin-left: auto; margin-right: auto;" }).appendTo('#shopPage');
             $('<div></div>').attr({ 'id': "divRelatedItems", 'style': "width: 100%; margin-top: 5 px;" }).appendTo('#divRelated');
@@ -584,7 +556,6 @@ $(document).ready(function () {
     // console.log(related);
     localStorage.setItem('related', JSON.stringify(related));
 
-    // console.log(Math.ceil(3.2));
 
     printFilters();
     loadListCars();
